@@ -34,6 +34,7 @@ pip3 install pygame
 Cài ultralytics
 ```
 pip3 install ultralytics
+```
 
  Thư viện ultralytics sẽ được cài và dùng để gọi YOLO(...) trong file Python.
 
@@ -50,3 +51,23 @@ cp -r VisitorKidWalk ~/.gazebo/models
 ```
 
 #CHẠY MÔ PHỎNG
+
+
+Hoặc thực hiện thủ công bằng cách: 
+
+copy 3 file testdae; VisitorKidWalk; map6  
+vào mục Home ấn contrl+H để hiện các thư mục ẩn vào .gazebo tạo thư mục models và dán 3 file trên vào đây. (Home/.gazebo/models/ 3 file trên)
+
+- Để chay được camera AI cần đảm bảo file train_model.py dòng 16 thay bằng đường dẫn tới file của bạn 
+```
+        self.model = YOLO("/home/ph/catkin_ws/src/slam/custom_yolov85/weights/best.pt")
+```
+
+  - file controller.py để mở bảng điều khiển
+  - file data.py dùng để chụp ảnh tự động sử dụng để lấy dữ liệu train model (lưu ý đường dẫn)
+  - filde detect_cicre.py và detect_depth.py dùng để nhận diện các khối ( không sử dụng trong prj này)
+  - lidar.py dùng để theo dõi khoảng cách tới các vật cản trong quá trình human tracking.
+  - navigation_fl_human.py dùng để humantrack và né vật cản trong quá trình theo (đang phát triển)
+  - rotate_images.py để xoay ảnh giúp train ảnh phù hợp
+  - train_model.py sử dụng để human tracking và thay đổi đối tượng track
+  - train_yolov8.py sử dụng để train lại dữ liệu khi muốn nâng cấp model (để ý đường dẫn đúng )
