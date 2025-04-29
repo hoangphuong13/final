@@ -43,3 +43,5 @@ cp -r testdae ~/.gazebo/models
 ```
 cp -r VisitorKidWalk ~/.gazebo/models
 ```
+
+#CHẠY MÔ PHỎNG
