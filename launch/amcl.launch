@@ -1,0 +1,51 @@
+<launch>
+  <!-- Use simulation time if running in Gazebo -->
+  <param name="use_sim_time" value="true"/>
+
+  <!-- AMCL node -->
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+    
+    <!-- TF frames -->
+    <param name="odom_frame_id" value="odom" />
+    <param name="base_frame_id" value="base_link" />
+    <param name="global_frame_id" value="map" />
+
+    <!-- Laser scan topic -->
+    <param name="scan_topic" value="scan" />
+
+    <!-- Particle filter settings -->
+    <param name="min_particles" value="500"/>
+    <param name="max_particles" value="2000"/>
+
+    <!-- Resample threshold: nhỏ hơn => resample thường xuyên hơn -->
+    <param name="resample_interval" value="1"/>
+
+    <!-- Update frequency -->
+    <param name="update_min_d" value="0.2"/>
+    <param name="update_min_a" value="0.2"/>
+
+    <!-- Laser model -->
+    <param name="laser_max_range" value="12.0"/>
+    <param name="laser_min_range" value="0.1"/>
+    <param name="laser_model_type" value="likelihood_field"/>
+    <param name="laser_z_hit" value="0.95"/>
+    <param name="laser_sigma_hit" value="0.2"/>
+    <param name="laser_z_rand" value="0.05"/>
+
+    <!-- Odometry model -->
+    <param name="odom_model_type" value="diff"/>
+    <param name="odom_alpha1" value="0.2"/>
+    <param name="odom_alpha2" value="0.2"/>
+    <param name="odom_alpha3" value="0.2"/>
+    <param name="odom_alpha4" value="0.2"/>
+
+    <!-- Recovery settings -->
+    <param name="recovery_alpha_slow" value="0.0"/>
+    <param name="recovery_alpha_fast" value="0.0"/>
+
+    <!-- Publish pose -->
+    <param name="do_beamskip" value="true"/>
+    <param name="use_map_topic" value="true"/>
+    <param name="first_map_only" value="false"/>
+  </node>
+</launch>

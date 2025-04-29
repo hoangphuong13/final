@@ -1,0 +1,11 @@
+<launch>
+  <!-- Load map -->
+  <node name="map_server" pkg="map_server" type="map_server"
+        args="$(find slam)/map/karto_map.yaml" />
+
+  <!-- Localization -->
+  <include file="$(find slam)/launch/amcl.launch" />
+
+  <!-- Navigation -->
+  <include file="$(find slam)/launch/move_base.launch" />
+</launch>

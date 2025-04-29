@@ -1,0 +1,69 @@
+<launch>
+  <!-- === Tham số chung === -->
+  <arg name="use_slam" default="true" /> <!-- Nếu true thì dùng SLAM để quét map -->
+  <arg name="world" default="$(find slam)/urdf/mapper.world" />
+  <!-- <arg name="world" default="$(find slam)urdf/worlds/human.world" />  -->
+  <!-- <arg name="world" default="$(find slam)/worlds/map3.world" /> -->
+  <arg name="map_yaml" default="$(find slam)/map/karto_map.yaml" />
+
+  <!-- === GAZEBO + ROBOT === -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world)" />
+    <arg name="paused" value="false" />
+    <arg name="use_sim_time" value="true" />
+    <arg name="gui" value="true" />
+  </include>
+
+  <!-- URDF + TF -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find slam)/urdf/slam.urdf'" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+  <!-- Static transform base_link <-> base_footprint -->
+  <node name="tf_footprint_base" pkg="tf" type="static_transform_publisher"
+        args="0 0 0 0 0 0 base_link base_footprint 40" />
+
+  <!-- Spawn robot -->
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -model slam"
+        output="screen" />
+
+  <!-- === EKF Localization Node === -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf" output="screen">
+    <rosparam file="$(find slam)/config/ekf.yaml" command="load" />
+  </node>
+  <!-- === QUÉT MAP HOẶC NAVIGATION === -->
+  <group if="$(arg use_slam)">
+    <!-- SLAM Karto -->
+    <node pkg="slam_karto" type="slam_karto" name="slam_karto" output="screen">
+      <param name="odom_frame" value="odom"/>
+      <param name="map_frame" value="map"/>
+      <param name="base_frame" value="base_link"/>
+      <param name="use_scan_matching" value="true"/>
+      <param name="minimumTravelDistance" value="0.2"/>
+      <param name="minimumTravelHeading" value="0.1"/>
+    </node>
+  </group>
+
+  <group unless="$(arg use_slam)">
+    <!-- Load static map -->
+    <node name="map_server" pkg="map_server" type="map_server"
+          args="$(arg map_yaml)" />
+    <!-- AMCL localization -->
+    <include file="$(find slam)/launch/amcl.launch" />
+    <!-- Move base -->
+    <include file="$(find slam)/launch/move_base.launch" />
+  </group>
+
+  <!-- Controller -->
+  <node name="controller" pkg="slam" type="controller.py" output="screen" />
+
+  <!-- RViz -->
+  <node name="rviz" pkg="rviz" type="rviz"
+        args="-d $(find slam)/launch/map.world.rviz" />
+
+
+
+  <node name="AI" pkg="slam" type="train_model.py" output="screen"/>
+      
+</launch>

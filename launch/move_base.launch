@@ -1,0 +1,33 @@
+<launch>
+  <!-- Chạy move_base với các thông số cấu hình -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+  
+    <!-- === TẢI CÁC THAM SỐ CẤU HÌNH === -->
+    <rosparam file="$(find slam)/config/costmap_common.yaml" command="load" />
+    <rosparam file="$(find slam)/config/global_costmap.yaml" command="load" />
+    <rosparam file="$(find slam)/config/local_costmap.yaml" command="load" />
+    <rosparam file="$(find slam)/config/base_local_planner.yaml" command="load" />
+
+    <!-- === THAM SỐ CỦA move_base === -->
+    <param name="base_global_planner" value="navfn/NavfnROS" />
+    <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+    
+       <!-- Tần số lập lại kế hoạch và gửi lệnh điều khiển -->
+   <!-- <param name="planner_frequency" value="2.0" /> -->      
+   <!-- <param name="controller_frequency" value="10.0" /> -->    
+    
+
+    <!-- Cho phép hành vi phục hồi khi bị kẹt -->
+    <param name="recovery_behavior_enabled" value="true"/>
+    <param name="clearing_rotation_allowed" value="true"/>
+
+    <!-- Tùy chọn: khai báo recovery behaviors cụ thể -->
+    <rosparam param="recovery_behaviors">
+      [
+        {name: 'conservative_reset', type: 'clear_costmap_recovery/ClearCostmapRecovery'},
+        {name: 'rotate_recovery', type: 'rotate_recovery/RotateRecovery'}
+      ]
+    </rosparam>
+
+  </node>
+</launch>

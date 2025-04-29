@@ -1,0 +1,7 @@
+image: /home/ph/catkin_ws/src/slam/map/karto_map.pgm
+resolution: 0.050000
+origin: [-10.649792, -8.898692, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+
