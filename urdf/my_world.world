@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="my_world">
+    <!-- Đặt sàn với ma sát thấp -->
+    <include>
+      <uri>model://arm_part</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+    <model name="ground_plane">
+      <link name="link">
+        <collision name="collision">
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.1</mu>
+                <mu2>0.1</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+      </link>
+    </model>
+
+    <!-- Đặt ánh sáng -->
+    <include>
+      <uri>model://sun</uri>
+      <pose>0 0 10 0 0 0</pose>
+    </include>
+
+    <!-- Thêm mô hình my_table -->
+    <include>
+      <uri>model://my_table</uri>
+      <pose>2 1 0 0 0 0</pose> <!-- Đặt tại x=2, y=1, z=0 -->
+    </include>
+
+    <!-- Cấu hình vật lý -->
+    <physics type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+  </world>
+</sdf>
