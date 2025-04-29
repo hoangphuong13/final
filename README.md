@@ -15,7 +15,19 @@ Dự án này tập trung vào việc nghiên cứu và mô phỏng thuật toá
 #SƯ DỤNG PACKAGE
 
 Trước tiên update ubuntu
-```bash 
+```
 sudo apt update
-
-
+```
+Sau đó cài đặt các package sau:
+```
+sudo apt install ros-noetic-slam-karto ros-noetic-navigation
+```
+Cài đặt thư viện kartoslam và navigation
+```
+sudo apt install python3 python3-pip -y
+```
+Cài đặt pip và python
+```
+pip3 install pygame
+```
+Cài đặt pygame
