@@ -19,15 +19,27 @@ Trước tiên update ubuntu
 sudo apt update
 ```
 Sau đó cài đặt các package sau:
+Cài đặt thư viện kartoslam và navigation
 ```
 sudo apt install ros-noetic-slam-karto ros-noetic-navigation
 ```
-Cài đặt thư viện kartoslam và navigation
+Cài đặt pip và python
 ```
 sudo apt install python3 python3-pip -y
 ```
-Cài đặt pip và python
+Cài đặt pygame
 ```
 pip3 install pygame
 ```
-Cài đặt pygame
+
+#ĐƯA MAP VÀO TRONG GAZEBO
+Có tổng cộng 3 models cần đưa vào: map6; testdae; VisitorKidWalk
+```
+cp -r map6 ~/.gazebo/models
+```
+```
+cp -r testdae ~/.gazebo/models
+```
+```
+cp -r VisitorKidWalk ~/.gazebo/models
+```
