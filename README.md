@@ -15,6 +15,6 @@ Dự án này tập trung vào việc nghiên cứu và mô phỏng thuật toá
 #SƯ DỤNG PACKAGE
 
 Trước tiên update ubuntu
-'''sudo apt update'''
+'''sudo apt update
 
 
