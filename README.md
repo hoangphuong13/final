@@ -31,8 +31,13 @@ Cài đặt pygame
 ```
 pip3 install pygame
 ```
+Cài ultralytics
+```
+pip3 install ultralytics
 
-#ĐƯA MAP VÀO TRONG GAZEBO
+ Thư viện ultralytics sẽ được cài và dùng để gọi YOLO(...) trong file Python.
+
+#ĐƯA MAP VA HUMAN VÀO TRONG GAZEBO (lưu ý đúng đường dẫn nếu không sẽ không khởi động được gazebo```)
 Có tổng cộng 3 models cần đưa vào: map6; testdae; VisitorKidWalk
 ```
 cp -r map6 ~/.gazebo/models
